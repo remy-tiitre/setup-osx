@@ -1,0 +1,34 @@
+---
+- name: Update Homebrew and Upgrade All Packages
+  community.general.homebrew:
+    update_homebrew: true
+    upgrade_all: true
+
+- name: Install Homebrew Applications
+  community.general.homebrew:
+    name: "{{ item.name | default(item) }}"
+    install_options: "{{ item.install_options | default(omit) }}"
+    state: latest
+  loop: "{{ MACOS_INSTALL_APPS_HOMEBREW_PACKAGES }}"
+
+- name: Tap a Homebrew homebrew/cask-versions repository
+  community.general.homebrew_tap:
+    name: homebrew/cask-versions
+
+- name: Install Homebrew Cask Applications
+  community.general.homebrew_cask:
+    name: "{{ item.name | default(item) }}"
+    install_options: "{{ item.install_options | default('appdir=' + MACOS_INSTALL_APPS_HOMEBREW_CASK_INSTALL_DIR) }}"
+    state: present
+  loop: "{{ MACOS_INSTALL_APPS_HOMEBREW_CASK_APPLICATIONS }}"
+
+- name: Install MAS
+  community.general.homebrew:
+    name: ['mas']
+    state: present
+
+- name: Install MAS Applications
+  community.general.mas:
+    id: "{{ item.id }}"
+    state: present
+  with_items: "{{ MACOS_INSTALL_APPS_MAS_APPLICATIONS }}"

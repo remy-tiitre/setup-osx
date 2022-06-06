@@ -1,0 +1,14 @@
+---
+MACOS_INSTALL_APPS_HOMEBREW_PACKAGES:
+  - ssh-copy-id
+
+MACOS_INSTALL_APPS_HOMEBREW_CASK_APPLICATIONS:
+  - docker
+  - { name: google-chrome, install_options: "appdir=/Applications/Developer Tools" }
+  - vagrant
+  - vagrant-manager
+  - virtualbox
+
+MACOS_INSTALL_APPS_MAS_APPLICATIONS:
+  - { id: 497799835, name: "XCode" }
+  - { id: 1295203466, name: "Microsoft Remote Desktop v10" }

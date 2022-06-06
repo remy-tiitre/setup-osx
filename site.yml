@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  connection: local
+
+  vars_files:
+    - config_default.yml
+
+  pre_tasks:
+    - include_vars: "{{ item }}"
+      with_fileglob:
+        - "{{ personal_files }}/personal.yml"
+
+  roles:
+    - { role: macos_install_apps }
+    - { role: macos_configure }
+    - { role: visual_studio_code }

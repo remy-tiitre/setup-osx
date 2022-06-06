@@ -1,0 +1,73 @@
+---
+- name: Set Global Settings
+  community.general.osx_defaults:
+    domain: NSGlobalDomain
+    key: "{{ item.key }}"
+    type: "{{ item.type }}"
+    value: "{{ item.value }}"
+    state: present
+  loop: "{{ MACOS_CONFIGURE_GLOBAL_SETTINGS }}"
+
+- name: Set Dock Settings
+  community.general.osx_defaults:
+    domain: com.apple.dock
+    key: "{{ item.key }}"
+    type: "{{ item.type }}"
+    value: "{{ item.value }}"
+    state: present
+  loop: "{{ MACOS_CONFIGURE_DOCK_SETTINGS }}"
+  notify:
+    - Kill Dock
+
+- name: Set Dock icons
+  block:
+   - name: Remove all items from the Dock
+     command: "dockutil --remove all --no-restart"
+   - name: Add Apps to the Dock
+     command: "dockutil --add '{{ item }}' --no-restart"
+     loop: "{{ MACOS_CONFIGURE_DOCK_APPLICATIONS }}"
+     notify:
+       - Kill Dock
+   - name: Add Folders to the Dock
+     command: "dockutil --add '{{ item.path | default(item) }}' --view {{ item.view | default('list') }} --display {{ item.display | default('folder') }} --sort {{ item.sort | default('name') }} --no-restart"
+     loop: "{{ MACOS_CONFIGURE_DOCK_FOLDERS }}"
+     notify:
+       - Kill Dock
+
+- name: Set Finder Settings
+  community.general.osx_defaults:
+    domain: com.apple.finder
+    key: "{{ item.key }}"
+    type: "{{ item.type }}"
+    value: "{{ item.value }}"
+    state: present
+  loop: "{{ MACOS_CONFIGURE_FINDER_SETTINGS }}"
+  notify:
+    - Kill Finder
+
+- name: Set Safari Settings
+  community.general.osx_defaults:
+    domain: ~/Library/Containers/com.apple.Safari/Data/Library/Preferences/com.apple.Safari
+    key: "{{ item.key }}"
+    type: "{{ item.type }}"
+    value: "{{ item.value }}"
+    state: present
+  loop: "{{ MACOS_CONFIGURE_SAFARI_SETTINGS }}"
+  notify:
+    - Kill Safari
+
+- name: Set Applications Settings
+  community.general.osx_defaults:
+    domain: "{{ item.domain }}"
+    key: "{{ item.key }}"
+    type: "{{ item.type }}"
+    value: "{{ item.value }}"
+    state: present
+  loop: "{{ MACOS_CONFIGURE_APPLICATIONS_SETTINGS }}"
+
+- name: Add fonts
+  copy:
+    src: "{{ item }}"
+    dest: ~/Library/Fonts
+  with_fileglob:
+    - "{{ personal_files }}/fonts/*"

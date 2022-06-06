@@ -1,0 +1,9 @@
+galaxy_info:
+  role_name: macos_install_apps
+  author: Remy Tiitre
+  description: Install Mac OS apps
+
+  license: MIT
+  min_ansible_version: '2.9'
+
+dependencies: []
