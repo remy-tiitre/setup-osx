@@ -7,16 +7,18 @@ Setup script itself installs Apple's Command Line Tools, Homebrew, Python 3 and 
 Installation
 ------------
 * Install MacOS (Ventura)
-* Audit & Lockdown
+* [Audit & Lockdown](https://github.com/remy-tiitre/secure-osx)
 * Add Yubikey
 * Sign in to App Store
 * Execute installation script:
   > ./setup.sh
 * Restore settings:
   > mackup restore
+* Restore repositories
+  > ghorg clone [group] --token=XXXXXX
 
 TODO
 ----
-# Install Adobe Creative Cloud Applications
-# Desktop & Screen Saver > Desktop > Photo
-# Time Machine
+* Install Adobe Creative Cloud Applications
+* Desktop & Screen Saver > Desktop > Photo
+* Time Machine
