@@ -1,5 +1,5 @@
 #!/bin/zsh
-PYTHON_VERSION="3.11.4"
+PYTHON_VERSION="3.11.5"
 # Upgrading Python requires manual cleanup
 # pyenv uninstall "${OLD_PYTHON_VERSION}"
 
