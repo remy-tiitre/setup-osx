@@ -17,6 +17,5 @@ Installation
 
 TODO
 ----
-* Install Adobe Creative Cloud Applications
 * Desktop & Screen Saver > Desktop > Photo
 * Time Machine

@@ -2,6 +2,7 @@
 PYTHON_VERSION="3.11.5"
 # Upgrading Python requires manual cleanup
 # pyenv uninstall "${OLD_PYTHON_VERSION}"
+# code ~/.zshrc
 
 # ===== DO NOT CHANGE BELOW THIS LINE ==================================================================================
 RED="\033[1;31m"; GREEN="\033[1;32m"; NOCOLOR="\033[0m"
@@ -21,10 +22,11 @@ echo -e "\n${GREEN}*** Update MacOS${NOCOLOR}"
 if ! which brew > /dev/null 2>&1; then
     echo -e "\n${GREEN}*** Installing Homebrew${NOCOLOR}"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-    echo -e 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    echo -e "eval \$($(brew --prefix)/bin/brew shellenv)" >> ~/.zprofile
+    eval \$($(brew --prefix)/bin/brew shellenv)
 else
     echo -e "\n${GREEN}*** Upgrading Homebrew${NOCOLOR}"
+    sudo chown -R $(whoami) $(brew --prefix)/*
     brew update
     brew upgrade
 fi
@@ -42,13 +44,8 @@ grep -qF 'eval "$(pyenv init --path)"' ~/.zprofile || echo -e 'if command -v pye
 echo -e "\n${GREEN}*** Install Python 3 ${NOCOLOR}"
 # Install dependencies
 brew install zlib sqlite
-if [[ $(uname -m) == 'arm64' ]]; then
-    export LDFLAGS="-L/opt/homebrew/opt/zlib/lib -L/opt/homebrew/opt/sqlite/lib"
-    export CPPFLAGS="-I/opt/homebrew/opt/zlib/include -I/opt/homebrew/opt/sqlite/include"
-else
-    export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
-    export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
-fi
+export LDFLAGS="-L$(brew --prefix)/opt/zlib/lib -L$(brew --prefix)/opt/sqlite/lib"
+export CPPFLAGS="-I$(brew --prefix)/opt/zlib/include -I$(brew --prefix)/opt/sqlite/include"
 
 if ! pyenv versions | grep -c "${PYTHON_VERSION}" > /dev/null 2>&1; then
     #Install Python
