@@ -4,16 +4,17 @@
     update_homebrew: true
     upgrade_all: true
 
+- name: Tap Homebrew repositories
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+  loop: "{{ MACOS_INSTALL_APPS_HOMEBREW_TAPS }}"
+
 - name: Install Homebrew Applications
   community.general.homebrew:
     name: "{{ item.name | default(item) }}"
     install_options: "{{ item.install_options | default(omit) }}"
     state: latest
   loop: "{{ MACOS_INSTALL_APPS_HOMEBREW_PACKAGES }}"
-
-- name: Tap a Homebrew homebrew/cask-versions repository
-  community.general.homebrew_tap:
-    name: homebrew/cask-versions
 
 - name: Install Homebrew Cask Applications
   community.general.homebrew_cask:
