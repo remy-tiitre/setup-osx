@@ -1,5 +1,5 @@
 #!/bin/zsh
-PYTHON_VERSION="3.11.5"
+PYTHON_VERSION="3.12.7"
 # Upgrading Python requires manual cleanup
 # pyenv uninstall "${OLD_PYTHON_VERSION}"
 # code ~/.zshrc
@@ -22,8 +22,8 @@ echo -e "\n${GREEN}*** Update MacOS${NOCOLOR}"
 if ! which brew > /dev/null 2>&1; then
     echo -e "\n${GREEN}*** Installing Homebrew${NOCOLOR}"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-    echo -e "eval \$($(brew --prefix)/bin/brew shellenv)" >> ~/.zprofile
-    eval \$($(brew --prefix)/bin/brew shellenv)
+    echo -e "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.zprofile
+    eval $($(brew --prefix)/bin/brew shellenv)
 else
     echo -e "\n${GREEN}*** Upgrading Homebrew${NOCOLOR}"
     sudo chown -R $(whoami) $(brew --prefix)/*
