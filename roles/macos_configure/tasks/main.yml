@@ -45,17 +45,6 @@
   notify:
     - Kill Finder
 
-- name: Set Safari Settings
-  community.general.osx_defaults:
-    domain: ~/Library/Containers/com.apple.Safari/Data/Library/Preferences/com.apple.Safari
-    key: "{{ item.key }}"
-    type: "{{ item.type }}"
-    value: "{{ item.value }}"
-    state: present
-  loop: "{{ MACOS_CONFIGURE_SAFARI_SETTINGS }}"
-  notify:
-    - Kill Safari
-
 - name: Set Applications Settings
   community.general.osx_defaults:
     domain: "{{ item.domain }}"

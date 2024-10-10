@@ -7,13 +7,6 @@ PYTHON_VERSION="3.12.7"
 # ===== DO NOT CHANGE BELOW THIS LINE ==================================================================================
 RED="\033[1;31m"; GREEN="\033[1;32m"; NOCOLOR="\033[0m"
 
-if ! command ls ~/Library/Containers/com.apple.Safari 1>/dev/null 2>&1; then
-    echo "Setting Safari preferences requires Full Disk Access.\n"
-    open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
-    read -r
-    exit 1
-fi
-
 # ----- Update MacOS ----------------------------------------------------------------------------------------
 echo -e "\n${GREEN}*** Update MacOS${NOCOLOR}"
 /usr/sbin/softwareupdate -ai
@@ -97,9 +90,3 @@ osascript << EOF
     end tell
   end tell
 EOF
-
-if command ls ~/Library/Containers/com.apple.Safari 1>/dev/null 2>&1; then
-    echo "Remember to remove the Full Disk Access.\n"
-    open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
-    read -r
-fi

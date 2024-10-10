@@ -20,7 +20,6 @@ Role Variables
 | MACOS_CONFIGURE_DOCK_APPLICATIONS     | Apps to add to the dock, everything else will be removed  |
 | MACOS_CONFIGURE_DOCK_FOLDERS          | Folders to add to the dock                                |
 | MACOS_CONFIGURE_FINDER_SETTINGS       | Configure Finder                                          |
-| MACOS_CONFIGURE_SAFARI_SETTINGS       | Configure Safari                                          |
 
 Example Playbook
 ----------------
@@ -46,8 +45,6 @@ Example Playbook
       - { path: "~/Downloads", sort: "datemodified" }
     MACOS_CONFIGURE_FINDER_SETTINGS:
       - { key: "FXEnableExtensionChangeWarning", type: bool, value: false, description: "Preferences > Advanced > Show Warning before changing an extension: Disabled" }
-    MACOS_CONFIGURE_SAFARI_SETTINGS:
-      - { key: "HomePage", type: string, value: "about:blank", description: "Preferences > General > Homepage: 'about:blank'" }
 
   roles:
     - { role: macos-configure }

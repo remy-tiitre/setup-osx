@@ -6,7 +6,3 @@
 - name: Kill Finder
   command: killall Finder
   ignore_errors: true
-
-- name: Kill Safari
-  command: killall Safari
-  ignore_errors: true
