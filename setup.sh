@@ -1,5 +1,5 @@
 #!/bin/zsh
-PYTHON_VERSION="3.12.7"
+PYTHON_VERSION="3.13.1"
 # Upgrading Python requires manual cleanup
 # pyenv uninstall "${OLD_PYTHON_VERSION}"
 # code ~/.zshrc
@@ -15,8 +15,10 @@ echo -e "\n${GREEN}*** Update MacOS${NOCOLOR}"
 if ! which brew > /dev/null 2>&1; then
     echo -e "\n${GREEN}*** Installing Homebrew${NOCOLOR}"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-    echo -e "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.zprofile
-    eval $($(brew --prefix)/bin/brew shellenv)
+    # With Intel CPU you will have to fix the path manually in .zprofile
+    # code ~/.zprofile
+    grep -qF 'eval "$(/opt/homebrew/bin/brew shellenv)"' ~/.zprofile || echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 else
     echo -e "\n${GREEN}*** Upgrading Homebrew${NOCOLOR}"
     sudo chown -R $(whoami) $(brew --prefix)/*
@@ -78,15 +80,3 @@ chmod o-w .
 ansible-galaxy install -r requirements.yml
 ansible-playbook -i localhost, -e "ansible_python_interpreter=$(pyenv whence --path python)" site.yml
 deactivate
-
-# ----- Finishing touches -----------------------------------------------------------------------------------
-# Don't keep recent items for Documents, Apps and Servers.
-osascript << EOF
-  tell application "System Events"
-    tell appearance preferences
-      set recent documents limit to 5
-      set recent applications limit to 5
-      set recent servers limit to 5
-    end tell
-  end tell
-EOF

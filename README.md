@@ -12,5 +12,3 @@ Installation
 * Sign in to App Store
 * Execute installation script:
   > ./setup.sh
-* Restore settings:
-  > mackup restore
