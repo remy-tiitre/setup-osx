@@ -80,3 +80,9 @@ chmod o-w .
 ansible-galaxy install -r requirements.yml
 ansible-playbook -i localhost, -e "ansible_python_interpreter=$(pyenv whence --path python)" site.yml
 deactivate
+
+# ----- Security configuration that can't be done with mobileconfig -----------------------------------------
+sudo defaults write /Library/Preferences/com.apple.locationmenu.plist ShowSystemServices -bool true
+sudo launchctl disable system/com.apple.nfsd
+sudo pwpolicy -n /Local/Default -setglobalpolicy "requiresMixedCase=1"
+sudo launchctl config user umask 077 &> /dev/null

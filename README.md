@@ -7,8 +7,7 @@ Setup script itself installs Apple's Command Line Tools, Homebrew, Python 3 and 
 Installation
 ------------
 * Install MacOS (Sequoia)
-* [Audit & Lockdown](https://github.com/remy-tiitre/secure-osx)
-* Add Yubikey
+* Secure the installation by following SECURITY.md
 * Sign in to App Store
 * Execute installation script:
   > ./setup.sh
